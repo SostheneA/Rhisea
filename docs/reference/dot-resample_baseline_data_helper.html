@@ -157,24 +157,6 @@ Supported estimators: RAW, Cook, Constrained Cook, EM (Millar), Maximum Likeliho
 <dt id="arg-mclust-perform-cv">mclust_perform_cv<a class="anchor" aria-label="anchor" href="#arg-mclust-perform-cv"></a></dt>
 <dd><p>Logical. Whether to cross-validate Mclust.</p></dd>
 
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to the underlying classifier.
-Certain classifiers support hyperparameter tuning via these arguments:</p><ul><li><p><strong>Random Forest (RF)</strong>: <code>ntree</code>, <code>mtry</code>, <code>nodesize</code>, <code>maxnodes</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="RF", ntree=5000, mtry=3)</code></p></li>
-</ul></li>
-<li><p><strong>Support Vector Machine (SVM)</strong>: <code>cost</code>, <code>gamma</code>, <code>kernel</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="SVM", cost=10, kernel="radial")</code></p></li>
-</ul></li>
-<li><p><strong>XGBoost (XGB)</strong>: <code>nrounds</code>, <code>max_depth</code>, <code>eta</code>, <code>subsample</code>, <code>colsample_bytree</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="XGB", nrounds=100, max_depth=4)</code></p></li>
-</ul></li>
-<li><p><strong>k-Nearest Neighbors (KNN)</strong>: <code>k</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="KNN", k=5)</code></p></li>
-</ul></li>
-<li><p><strong>Artificial Neural Network (ANN)</strong>: <code>size</code>, <code>decay</code>, <code>maxit</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="ANN", size=10, decay=0.01)</code></p></li>
-</ul></li>
-<li><p><strong>Naive Bayes (NB)</strong>: <code>laplace</code></p><ul><li><p>Example: <code>run_hisea_all(..., method_class="NB", laplace=1)</code></p></li>
-</ul></li>
-</ul><p>⚠ Ensure that the names of arguments match those expected by the classifier.
-Unrecognized arguments may be ignored or raise an error.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

@@ -33,30 +33,6 @@
 #' @param phi_method Character. "standard" or "cv" (cross-validation-based confusion matrix).
 #' @param mclust_model_names Character vector. Models to test with Mclust.
 #' @param mclust_perform_cv Logical. Whether to cross-validate Mclust.
-#' @param ... Additional arguments passed to the underlying classifier.
-#'   Certain classifiers support hyperparameter tuning via these arguments:
-#'
-#'   - **Random Forest (RF)**: `ntree`, `mtry`, `nodesize`, `maxnodes`
-#'     - Example: `run_hisea_all(..., method_class="RF", ntree=5000, mtry=3)`
-#'
-#'   - **Support Vector Machine (SVM)**: `cost`, `gamma`, `kernel`
-#'     - Example: `run_hisea_all(..., method_class="SVM", cost=10, kernel="radial")`
-#'
-#'   - **XGBoost (XGB)**: `nrounds`, `max_depth`, `eta`, `subsample`, `colsample_bytree`
-#'     - Example: `run_hisea_all(..., method_class="XGB", nrounds=100, max_depth=4)`
-#'
-#'   - **k-Nearest Neighbors (KNN)**: `k`
-#'     - Example: `run_hisea_all(..., method_class="KNN", k=5)`
-#'
-#'   - **Artificial Neural Network (ANN)**: `size`, `decay`, `maxit`
-#'     - Example: `run_hisea_all(..., method_class="ANN", size=10, decay=0.01)`
-#'
-#'   - **Naive Bayes (NB)**: `laplace`
-#'     - Example: `run_hisea_all(..., method_class="NB", laplace=1)`
-#'
-#'   ⚠ Ensure that the names of arguments match those expected by the classifier.
-#'     Unrecognized arguments may be ignored or raise an error.
-
 #'
 #' @return A list with:
 #' \describe{
@@ -670,6 +646,30 @@ write_mix_from_dataframe <- function(df, var_cols_mix, file_path = "hisea.mix") 
 #' @param phi_method Character. Method for phi calculation. Default: "default"
 #' @param mclust_model_names Character vector. Model names for mclust. Default: NULL
 #' @param mclust_perform_cv Logical. Whether to perform cross-validation for mclust. Default: FALSE
+#' @param ... Additional arguments passed to the underlying classifier.
+#'   Certain classifiers support hyperparameter tuning via these arguments:
+#'
+#'   - **Random Forest (RF)**: `ntree`, `mtry`, `nodesize`, `maxnodes`
+#'     - Example: `run_hisea_all(..., method_class="RF", ntree=5000, mtry=3)`
+#'
+#'   - **Support Vector Machine (SVM)**: `cost`, `gamma`, `kernel`
+#'     - Example: `run_hisea_all(..., method_class="SVM", cost=10, kernel="radial")`
+#'
+#'   - **XGBoost (XGB)**: `nrounds`, `max_depth`, `eta`, `subsample`, `colsample_bytree`
+#'     - Example: `run_hisea_all(..., method_class="XGB", nrounds=100, max_depth=4)`
+#'
+#'   - **k-Nearest Neighbors (KNN)**: `k`
+#'     - Example: `run_hisea_all(..., method_class="KNN", k=5)`
+#'
+#'   - **Artificial Neural Network (ANN)**: `size`, `decay`, `maxit`
+#'     - Example: `run_hisea_all(..., method_class="ANN", size=10, decay=0.01)`
+#'
+#'   - **Naive Bayes (NB)**: `laplace`
+#'     - Example: `run_hisea_all(..., method_class="NB", laplace=1)`
+#'
+#'   ⚠ Ensure that the names of arguments match those expected by the classifier.
+#'     Unrecognized arguments may be ignored or raise an error.
+
 #'
 #' @return List containing:
 #' \describe{

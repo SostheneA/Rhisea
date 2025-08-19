@@ -74,6 +74,38 @@ run_hisea_all(
 \item{mclust_model_names}{Character vector. Model names for mclust. Default: NULL}
 
 \item{mclust_perform_cv}{Logical. Whether to perform cross-validation for mclust. Default: FALSE}
+
+\item{...}{Additional arguments passed to the underlying classifier.
+Certain classifiers support hyperparameter tuning via these arguments:
+\itemize{
+\item \strong{Random Forest (RF)}: \code{ntree}, \code{mtry}, \code{nodesize}, \code{maxnodes}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="RF", ntree=5000, mtry=3)}
+}
+\item \strong{Support Vector Machine (SVM)}: \code{cost}, \code{gamma}, \code{kernel}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="SVM", cost=10, kernel="radial")}
+}
+\item \strong{XGBoost (XGB)}: \code{nrounds}, \code{max_depth}, \code{eta}, \code{subsample}, \code{colsample_bytree}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="XGB", nrounds=100, max_depth=4)}
+}
+\item \strong{k-Nearest Neighbors (KNN)}: \code{k}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="KNN", k=5)}
+}
+\item \strong{Artificial Neural Network (ANN)}: \code{size}, \code{decay}, \code{maxit}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="ANN", size=10, decay=0.01)}
+}
+\item \strong{Naive Bayes (NB)}: \code{laplace}
+\itemize{
+\item Example: \code{run_hisea_all(..., method_class="NB", laplace=1)}
+}
+}
+
+⚠ Ensure that the names of arguments match those expected by the classifier.
+Unrecognized arguments may be ignored or raise an error.}
 }
 \value{
 List containing:
