@@ -27,7 +27,7 @@ run_hisea_all(
   phi_method = c("standard", "cv"),
   mclust_model_names = NULL,
   mclust_perform_cv = TRUE,
-  ..
+  ...
 )
 }
 \arguments{

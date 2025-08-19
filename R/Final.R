@@ -711,7 +711,7 @@ run_hisea_all <- function(type = "ANALYSIS",
                           resampled_baseline_sizes = NULL,
                           phi_method  = c("standard","cv"),
                           mclust_model_names = NULL,
-                          mclust_perform_cv  = TRUE,..) {
+                          mclust_perform_cv  = TRUE,...) {
 
   type         <- toupper(type)
   method_class <- toupper(method_class)
