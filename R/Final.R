@@ -395,8 +395,6 @@ predict_model <- function(model_info, newdata, method_class,
 # -------------------------------------------------------------------
 get_cv_metrics_and_phi <- function(data, labels, method_class,
                                    np, nv, stocks_names,
-                                   knn_k, rf_ntree, svm_kernel,
-                                   xgb_nrounds, ann_size,
                                    generic_colnames,
                                    folds = 10) {
   if (!requireNamespace("caret", quietly=TRUE))
@@ -418,8 +416,6 @@ get_cv_metrics_and_phi <- function(data, labels, method_class,
     mi  <- train_model(tr_data, tr_lab,
                        method_class,
                        np, nv,
-                       knn_k, rf_ntree, svm_kernel,
-                       xgb_nrounds, ann_size,
                        generic_colnames)
     pr  <- predict_model(mi, ts_data, method_class,
                          stocks_names, generic_colnames)
@@ -647,11 +643,6 @@ write_mix_from_dataframe <- function(df, var_cols_mix, file_path = "hisea.mix") 
 #' @param stocks_names Character vector. Names of stocks. Default: NULL
 #' @param resample_baseline Logical. Whether to resample baseline data. Default: FALSE
 #' @param resampled_baseline_sizes Integer vector. Sizes for resampled baseline. Default: NULL
-#' @param knn_k Integer. Number of neighbors for KNN method. Default: 5
-#' @param rf_ntree Integer. Number of trees for Random Forest. Default: 500
-#' @param svm_kernel Character. Kernel type for SVM ("radial", "linear", etc.). Default: "radial"
-#' @param xgb_nrounds Integer. Number of rounds for XGBoost. Default: 100
-#' @param ann_size Integer. Size of neural network hidden layer. Default: 5
 #' @param phi_method Character. Method for phi calculation. Default: "default"
 #' @param mclust_model_names Character vector. Model names for mclust. Default: NULL
 #' @param mclust_perform_cv Logical. Whether to perform cross-validation for mclust. Default: FALSE
@@ -675,12 +666,6 @@ write_mix_from_dataframe <- function(df, var_cols_mix, file_path = "hisea.mix") 
 #'   baseline_path = "my_baseline.txt",
 #'   mix_path = "my_mixture.txt"
 #' )
-#'
-#' # Analysis with Random Forest
-#' result_rf <- run_hisea_all(
-#'   method_class = "RF",
-#'   rf_ntree = 1000
-#' )
 #' }
 run_hisea_all <- function(type = "ANALYSIS",
                           np, nv,
@@ -700,11 +685,6 @@ run_hisea_all <- function(type = "ANALYSIS",
                           stocks_names  = NULL,
                           resample_baseline    = FALSE,
                           resampled_baseline_sizes = NULL,
-                          knn_k       = 5,
-                          rf_ntree    = 500,
-                          svm_kernel  = "radial",
-                          xgb_nrounds = 50,
-                          ann_size    = 5,
                           phi_method  = c("standard","cv"),
                           mclust_model_names = NULL,
                           mclust_perform_cv  = TRUE) {
@@ -784,21 +764,15 @@ run_hisea_all <- function(type = "ANALYSIS",
                                        method_class,
                                        np,nv,
                                        stock_names_internal,
-                                       knn_k,rf_ntree,svm_kernel,
-                                       xgb_nrounds,ann_size,
                                        generic_colnames, folds=10)
       quality <- cmv; iter_Phi <- as.matrix(cmv$phi_matrix)
       # train final model on full baseline
       mi <- train_model(bdata, bfac,
                         method_class, np, nv,
-                        knn_k, rf_ntree, svm_kernel,
-                        xgb_nrounds, ann_size,
                         generic_colnames)
     } else {
       mi <- train_model(bdata, bfac,
                         method_class, np, nv,
-                        knn_k, rf_ntree, svm_kernel,
-                        xgb_nrounds, ann_size,
                         generic_colnames)
       prb <- predict_model(mi, bdata, method_class,
                            stock_names_internal, generic_colnames)

@@ -24,11 +24,6 @@ run_hisea_all(
   stocks_names = NULL,
   resample_baseline = FALSE,
   resampled_baseline_sizes = NULL,
-  knn_k = 5,
-  rf_ntree = 500,
-  svm_kernel = "radial",
-  xgb_nrounds = 50,
-  ann_size = 5,
   phi_method = c("standard", "cv"),
   mclust_model_names = NULL,
   mclust_perform_cv = TRUE
@@ -73,16 +68,6 @@ run_hisea_all(
 
 \item{resampled_baseline_sizes}{Integer vector. Sizes for resampled baseline. Default: NULL}
 
-\item{knn_k}{Integer. Number of neighbors for KNN method. Default: 5}
-
-\item{rf_ntree}{Integer. Number of trees for Random Forest. Default: 500}
-
-\item{svm_kernel}{Character. Kernel type for SVM ("radial", "linear", etc.). Default: "radial"}
-
-\item{xgb_nrounds}{Integer. Number of rounds for XGBoost. Default: 100}
-
-\item{ann_size}{Integer. Size of neural network hidden layer. Default: 5}
-
 \item{phi_method}{Character. Method for phi calculation. Default: "default"}
 
 \item{mclust_model_names}{Character vector. Model names for mclust. Default: NULL}
@@ -114,12 +99,6 @@ result <- run_hisea_all(
   method_class = "LDA",
   baseline_path = "my_baseline.txt",
   mix_path = "my_mixture.txt"
-)
-
-# Analysis with Random Forest
-result_rf <- run_hisea_all(
-  method_class = "RF",
-  rf_ntree = 1000
 )
 }
 }
