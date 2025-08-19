@@ -33,6 +33,30 @@
 #' @param phi_method Character. "standard" or "cv" (cross-validation-based confusion matrix).
 #' @param mclust_model_names Character vector. Models to test with Mclust.
 #' @param mclust_perform_cv Logical. Whether to cross-validate Mclust.
+#' @param ... Additional arguments passed to the underlying classifier.
+#'   Certain classifiers support hyperparameter tuning via these arguments:
+#'
+#'   - **Random Forest (RF)**: `ntree`, `mtry`, `nodesize`, `maxnodes`
+#'     - Example: `run_hisea_all(..., method_class="RF", ntree=5000, mtry=3)`
+#'
+#'   - **Support Vector Machine (SVM)**: `cost`, `gamma`, `kernel`
+#'     - Example: `run_hisea_all(..., method_class="SVM", cost=10, kernel="radial")`
+#'
+#'   - **XGBoost (XGB)**: `nrounds`, `max_depth`, `eta`, `subsample`, `colsample_bytree`
+#'     - Example: `run_hisea_all(..., method_class="XGB", nrounds=100, max_depth=4)`
+#'
+#'   - **k-Nearest Neighbors (KNN)**: `k`
+#'     - Example: `run_hisea_all(..., method_class="KNN", k=5)`
+#'
+#'   - **Artificial Neural Network (ANN)**: `size`, `decay`, `maxit`
+#'     - Example: `run_hisea_all(..., method_class="ANN", size=10, decay=0.01)`
+#'
+#'   - **Naive Bayes (NB)**: `laplace`
+#'     - Example: `run_hisea_all(..., method_class="NB", laplace=1)`
+#'
+#'   ⚠ Ensure that the names of arguments match those expected by the classifier.
+#'     Unrecognized arguments may be ignored or raise an error.
+
 #'
 #' @return A list with:
 #' \describe{
@@ -396,7 +420,7 @@ predict_model <- function(model_info, newdata, method_class,
 get_cv_metrics_and_phi <- function(data, labels, method_class,
                                    np, nv, stocks_names,
                                    generic_colnames,
-                                   folds = 10) {
+                                   folds = 10,...) {
   if (!requireNamespace("caret", quietly=TRUE))
     stop("Package 'caret' is required for cross-validation.")
 
@@ -416,7 +440,7 @@ get_cv_metrics_and_phi <- function(data, labels, method_class,
     mi  <- train_model(tr_data, tr_lab,
                        method_class,
                        np, nv,
-                       generic_colnames)
+                       generic_colnames,...)
     pr  <- predict_model(mi, ts_data, method_class,
                          stocks_names, generic_colnames)
     preds[test_i] <- pr$class
@@ -687,7 +711,7 @@ run_hisea_all <- function(type = "ANALYSIS",
                           resampled_baseline_sizes = NULL,
                           phi_method  = c("standard","cv"),
                           mclust_model_names = NULL,
-                          mclust_perform_cv  = TRUE) {
+                          mclust_perform_cv  = TRUE,..) {
 
   type         <- toupper(type)
   method_class <- toupper(method_class)
@@ -764,16 +788,16 @@ run_hisea_all <- function(type = "ANALYSIS",
                                        method_class,
                                        np,nv,
                                        stock_names_internal,
-                                       generic_colnames, folds=10)
+                                       generic_colnames, folds=10,...)
       quality <- cmv; iter_Phi <- as.matrix(cmv$phi_matrix)
       # train final model on full baseline
       mi <- train_model(bdata, bfac,
                         method_class, np, nv,
-                        generic_colnames)
+                        generic_colnames,...)
     } else {
       mi <- train_model(bdata, bfac,
                         method_class, np, nv,
-                        generic_colnames)
+                        generic_colnames,...)
       prb <- predict_model(mi, bdata, method_class,
                            stock_names_internal, generic_colnames)
       cm  <- table(Predicted=factor(prb$class,
